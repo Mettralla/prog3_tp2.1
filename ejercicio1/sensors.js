@@ -18,7 +18,7 @@ class Sensor {
         if (validTypes.includes(type)) {
             return type;
         } else {
-            throw new Error("Invalid Type")
+            console.error("Invalid Type")
         }
     }
 }
