@@ -18,7 +18,7 @@ class Sensor {
         if (validTypes.includes(type)) {
             return type;
         } else {
-            console.error(`Invalid Type Error: ${type} is an invalid type`)
+            console.error(`Invalid Type Error: ${type} is an invalid type`);
         }
     }
 }
