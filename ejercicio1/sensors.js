@@ -1,14 +1,11 @@
 class Sensor {
-    #value;
-    #updated_at;
-
     constructor(id, name, type, value, unit, updated_at) {
         this.id = id;
         this.name = name;
         this.type = this.#checkType(type);
-        this.#value = value;
+        this.value = value;
         this.unit = unit;
-        this.#updated_at = updated_at;
+        this.updated_at = updated_at;
     }
 
     set updateValue(newValue) {
@@ -59,7 +56,28 @@ class SensorManager {
         }
     }
 
-    async loadSensors(url) {}
+    async loadSensors(url) {
+        try {
+            const response = await fetch(url);
+            const sensorsData = await response.json();
+
+            for (const sensorData of sensorsData) {
+                const sensor = new Sensor(
+                    sensorData.id,
+                    sensorData.name,
+                    sensorData.type,
+                    sensorData.value,
+                    sensorData.unit,
+                    sensorData.updated_at
+                );
+                this.addSensor(sensor)
+            }
+
+            this.render();
+        } catch (error) {
+            console.error(error);
+        }
+    }
 
     render() {
         const container = document.getElementById("sensor-container");
