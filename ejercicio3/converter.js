@@ -6,11 +6,37 @@ class Currency {
 }
 
 class CurrencyConverter {
-    constructor() {}
+    constructor(apiUrl) {
+        this.apiUrl = apiUrl;
+        this.currencies = [];
+    }
 
-    getCurrencies(apiUrl) {}
+    async getCurrencies() {
+        try {
+            const response = await fetch(`${this.apiUrl}/currencies`);
+            const currenciesData = await response.json();
+            for (const currency in currenciesData) {
+                this.currencies.push(new Currency(currency, currenciesData[currency]));
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    }
 
-    convertCurrency(amount, fromCurrency, toCurrency) {}
+    async convertCurrency(amount, fromCurrency, toCurrency) {
+        if (fromCurrency.code == toCurrency.code) {
+            return Number(amount);
+        }
+
+        try {
+            const response = await fetch(`${this.apiUrl}/latest?amount=${amount}&from=${fromCurrency.code}&to=${toCurrency.code}`);
+            const conversionData = await response.json();
+            return conversionData.rates[toCurrency.code];
+        } catch (error) {
+            console.error(error);
+            return null;
+        }
+    }
 }
 
 document.addEventListener("DOMContentLoaded", async () => {
