@@ -11,7 +11,7 @@ En este ejercicio se solicita completar la implementación de un **juego de memo
 
 ### Clase `Card`
 
-La clase `Card` representa una carta del juego. Cada carta tiene un nombre, una imagen, un estado de volteo y un elemento HTML asociado.
+La clase `Card` representa una carta del juego. Cada carta tiene un nombre, una imagen, un estado e volteo y un elemento HTML asociado.d
 
 ```javascript
 class Card {
