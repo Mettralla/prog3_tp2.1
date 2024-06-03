@@ -35,8 +35,10 @@ class Card {
     toggleFlip() {
         if (this.isFlipped) {
             this.#unflip();
+            this.isFlipped = false;
         } else {
             this.#flip();
+            this.isFlipped = true;
         }
     }
 
@@ -134,6 +136,25 @@ class MemoryGame {
                 setTimeout(() => this.checkForMatch(), this.flipDuration);
             }
         }
+    }
+
+    checkForMatch() {
+        const [card1, card2] = this.flippedCards;
+        console.log(card1);
+        console.log(card2);
+        if (card1.matches(card2)) {
+            this.matchedCards.push(card1, card2);
+        } else {
+            card1.toggleFlip();
+            card2.toggleFlip();
+        }
+        this.flippedCards = [];
+    }
+
+    resetGame() {
+        this.flippedCards = [];
+        this.matchedCards = [];
+        this.board.reset();
     }
 }
 
